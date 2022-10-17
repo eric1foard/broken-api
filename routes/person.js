@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 function Person(body) {
@@ -7,37 +7,36 @@ function Person(body) {
   this.apples = 12;
 }
 
-Person.prototype.greet = function() {
-  this.greeting = this.name = 'Hi ' + this.name + ', how are you?';
-  return this.greeting;
+Person.prototype.greet = function () {
+  return "Hi " + this.name + ", how are you?";
 };
 
-Person.prototype.howManyApples = function(first_argument) {
-  return this.name + ' has ' + apples + ' apples';
+Person.prototype.howManyApples = function () {
+  return this.name + " has " + this.apples + " apples";
 };
 
-Person.prototype.greetPet = function(pet) {
-  return 'Hi ' + pet + ', YOU\'RE JUST SO FLUFFY! :O ';
+Person.prototype.greetPet = function (pet) {
+  return "Hi " + pet + ", YOU'RE JUST SO FLUFFY! :O";
 };
 
-Person.prototype.greetPets = function(first_argument) {
-  this.petGreeting = [];
-  if (typeof this.pets === 'array') {
-    pets.forEach(function(pet) {
-      this.petGreeting.push(this.greetPet(pet));
+Person.prototype.greetPets = function () {
+  var petGreeting = [];
+  if (Array.isArray(this.pets)) {
+    this.pets.forEach((pet) => {
+      petGreeting.push(this.greetPet(pet));
     });
   } else {
-    this.petGreeting.push(this.greetPet(pet));
+    petGreeting.push(this.greetPet(this.pets));
   }
-  return = this.petGreeting.join();
+  return petGreeting.join(" ");
 };
 
-router.post('/', function(req, res, next) {
+router.post("/", function (req, res, next) {
   var _person = new Person(req.body);
   res.json({
-  	greeting: _person.greet(),
+    greeting: _person.greet(),
     apples: _person.howManyApples(),
-    greetPets: _person.greetPets()
+    greetPets: _person.greetPets(),
   });
 });
 
